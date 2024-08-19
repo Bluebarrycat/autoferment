@@ -30,30 +30,52 @@ degree_sign = chr(223) # For the degree symbol, assign this character to the "de
 MIN_TEMP = 24
 MAX_TEMP = 26
 
+# The below function is to display the temperatures.
+def temp_display()
+	dev_temperature_celsius, dev_temperature_fahrenheit, = read_temp() # Calls on function "read_temp()", assigns the returned items to the corresponding variable name
+	dt = datetime.now() # Assigns current date and time to the variable "dt"
+	f = open("Ferment Log.txt", "a+") #a+ parameter tells open to append every time the program runs, otherwise create a new file.
+	toWrite = dt.strftime("%m/%d/%Y,%H:%M:%S") + ",Temperature:," + str(dev_temperature_celsius) + "," + str(dev_temperature_fahrenheit)
+# This above string is created and assigned to the variable toWrite.
+	f.write(toWrite + "\n")
+	f.close()
+	lcd.clear() # clears the lcd
+	lcd.write_string(f'Temp: {dev_temperature_celsius:.2f}{degree_sign}C')
+
+	if dev_temperature_celsius <= MIN_TEMP:
+		# I want to turn on the heat now.
+		relay.on()
+		print("Power on ",dev_temperature_celsius)
+	else:
+		if dev_temperature_celsius >= MAX_TEMP:
+			relay.off()
+			print("Power off ",dev_temperature_celsius)
+
 
 # Below is the main while loop that will run the program forever. It is within a try loop that is triggered when Ctl+c is pressed. It is clean code to capture a keyboard termination.
 try:
 
 	while True:
+		temp_display()
+  
+	# 	dev_temperature_celsius, dev_temperature_fahrenheit, = read_temp() # Calls on function "read_temp()", assigns the returned items to the corresponding variable name
+	# 	dt = datetime.now() # Assigns current date and time to the variable "dt"
+	# 	f = open("Ferment Log.txt", "a+") #a+ parameter tells open to append every time the program runs, otherwise create a new file.
+	# 	toWrite = dt.strftime("%m/%d/%Y,%H:%M:%S") + ",Temperature:," + str(dev_temperature_celsius) + "," + str(dev_temperature_fahrenheit)
+	# # This above string is created and assigned to the variable toWrite.
+	# 	f.write(toWrite + "\n")
+	# 	f.close()
+	# 	lcd.clear() # clears the lcd
+	# 	lcd.write_string(f'Temp: {dev_temperature_celsius:.2f}{degree_sign}C')
 
-		dev_temperature_celsius, dev_temperature_fahrenheit, = read_temp() # Calls on function "read_temp()", assigns the returned items to the corresponding variable name
-		dt = datetime.now() # Assigns current date and time to the variable "dt"
-		f = open("Ferment Log.txt", "a+") #a+ parameter tells open to append every time the program runs, otherwise create a new file.
-		toWrite = dt.strftime("%m/%d/%Y,%H:%M:%S") + ",Temperature:," + str(dev_temperature_celsius) + "," + str(dev_temperature_fahrenheit)
-	# This above string is created and assigned to the variable toWrite.
-		f.write(toWrite + "\n")
-		f.close()
-		lcd.clear() # clears the lcd
-		lcd.write_string(f'Temp: {dev_temperature_celsius:.2f}{degree_sign}C')
-
-		if dev_temperature_celsius <= MIN_TEMP:
-			# I want to turn on the heat now.
-			relay.on()
-			print("Power on ",dev_temperature_celsius)
-		else:
-			if dev_temperature_celsius >= MAX_TEMP:
-				relay.off()
-				print("Power off ",dev_temperature_celsius)
+	# 	if dev_temperature_celsius <= MIN_TEMP:
+	# 		# I want to turn on the heat now.
+	# 		relay.on()
+	# 		print("Power on ",dev_temperature_celsius)
+	# 	else:
+	# 		if dev_temperature_celsius >= MAX_TEMP:
+	# 			relay.off()
+	# 			print("Power off ",dev_temperature_celsius)
 		time.sleep(900) # 15 minutes
 except KeyboardInterrupt:
 	lcd.clear()
