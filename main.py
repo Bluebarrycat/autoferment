@@ -31,7 +31,7 @@ MIN_TEMP = 24
 MAX_TEMP = 26
 
 # The below function is to display the temperatures.
-def temp_display()
+def temp_display():
 	dev_temperature_celsius, dev_temperature_fahrenheit, = read_temp() # Calls on function "read_temp()", assigns the returned items to the corresponding variable name
 	dt = datetime.now() # Assigns current date and time to the variable "dt"
 	f = open("Ferment Log.txt", "a+") #a+ parameter tells open to append every time the program runs, otherwise create a new file.
