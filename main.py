@@ -53,7 +53,7 @@ def temp_display():
    
 def main():
     temp_display()
-    time.sleep(900) #15 minutes
+    time.sleep(10) #15 minutes is 900 seconds
 
 
 

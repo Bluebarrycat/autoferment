@@ -15,6 +15,8 @@ while True: # infinite loop
 #			pkill -9 -f automate_fermentation.py
 #			time.sleep(1)
 			temp_display()
+		else:
+			main()
 
 
 	time.sleep(1) # wait to loop again so we don't use the processor too much.
