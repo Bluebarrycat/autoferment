@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 '''The purpose of this program is to take temperature readings from a DS18B20 temperature
    sensor (function), write to a file in CSV format (for export to excel), and print what is going into the
    file on an LCD screen'''

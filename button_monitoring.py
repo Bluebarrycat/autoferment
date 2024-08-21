@@ -14,9 +14,10 @@ while True: # infinite loop
 		elif restartProgram.is_pressed:
 #			pkill -9 -f automate_fermentation.py
 #			time.sleep(1)
-			temp_display()
-		else:
-			main()
+#			temp_display()
+			print("this button is pressed")
+#		else:
+#			main()
 
 
 	time.sleep(1) # wait to loop again so we don't use the processor too much.
