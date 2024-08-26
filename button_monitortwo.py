@@ -4,6 +4,7 @@ from gpiozero import Button
 import subprocess
 from signal import pause
 import sys
+# I might need to import the RPLCD library here, and not just in main.py if this is going to monitor it.
 
 def restart_program():
    try:
