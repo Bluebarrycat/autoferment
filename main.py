@@ -31,8 +31,8 @@ lcd = CharLCD(i2c_expander='PCF8574', address=0x27, port=1, cols=16, rows=2, dot
 degree_sign = chr(223) # For the degree symbol, assign this character to the "degree_sign" variable for ease of use.
 MIN_TEMP = 24
 MAX_TEMP = 26
-stopButton = Button(27) # defines the button as an object and chooses GPIO 27
-restartProgram = Button(22)
+stopButton = gpiozero.Button(27) # defines the button as an object and chooses GPIO 27
+restartProgram = gpiozero.Button(22)
 
 # The below function is to display the temperatures.
 def temp_display():
@@ -77,21 +77,22 @@ def countdown(h, m, s):  #15 minutes
 		
 		# Delays the program one second
 		time.sleep(1)
-		
+
 		# reduces total time by one second
 		total_seconds -= 1
 		if stopButton.is_pressed or restartProgram.is_pressed: # check if the user let go of the button
 			time.sleep(1) # wait for the hold time we want.
 			if stopButton.is_pressed: # check if the user let go of the button
-                os.system("sudo shutdown now -h") # shut down the Pi -h is or -r will reset
-            elif restartProgram.is_pressed:
-				print("the restart program button is pressed")
+				os.system("sudo shutdown now -h") # shut down the Pi -h is or -r will reset
+			elif restartProgram.is_pressed:
+				#print("the restart program button is pressed")
+				temp_display()
 	#print("The countdown is at zero seconds!")
 
 try:
 	while True:
 		temp_display()
-		countdown(0, 0, 15)
+		countdown(0, 15, 0)
   
 except KeyboardInterrupt:
 	lcd.clear()
