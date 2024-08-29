@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 '''#!/home/brewmaster/projects/autoferment/venv/bin/python3'''
 
 '''The purpose of this program is to take temperature readings from a DS18B20 temperature
