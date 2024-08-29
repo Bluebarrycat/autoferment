@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 '''#!/home/brewmaster/projects/autoferment/venv/bin/python3'''
 
 '''The purpose of this program is to take temperature readings from a DS18B20 temperature
@@ -56,7 +55,7 @@ def temp_display():
    
 def main():
     temp_display()
-    time.sleep(900) #15 minutes is 900 seconds
+    time.sleep(15) #15 minutes is 900 seconds
 
 
 

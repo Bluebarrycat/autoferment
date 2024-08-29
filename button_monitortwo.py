@@ -4,11 +4,13 @@ from gpiozero import Button
 import subprocess
 from signal import pause
 import sys
+#from RPLCD.i2c import CharLCD
+
 # I might need to import the RPLCD library here, and not just in main.py if this is going to monitor it.
 
 def restart_program():
    try:
-      subprocess.run(['python3', 'main.py'])
+      subprocess.run(['/home/brewmaster/projects/autoferment/venv/bin/python3', 'main.py'])
    except KeyboardInterrupt:
       print("Exiting script...")
       sys.exit()
