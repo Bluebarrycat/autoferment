@@ -18,7 +18,7 @@ import time
 # The time library is used to introduce delays in the code to give enough time for the sensor to get
 # valid readings.
 
-from datetime import datetime
+import datetime
 from RPLCD.i2c import CharLCD
 
 RELAY_PIN = 17 # The GPIO pin the 5v relay is connected to
@@ -35,7 +35,7 @@ MAX_TEMP = 26
 # The below function is to display the temperatures.
 def temp_display():
 	dev_temperature_celsius, dev_temperature_fahrenheit, = read_temp() # Calls on function "read_temp()", assigns the returned items to the corresponding variable name
-	dt = datetime.now() # Assigns current date and time to the variable "dt"
+	dt = datetime.datetime.now() # Assigns current date and time to the variable "dt"
 	f = open("Ferment Log.txt", "a+") #a+ parameter tells open to append every time the program runs, otherwise create a new file.
 	toWrite = dt.strftime("%m/%d/%Y,%H:%M:%S") + ",Temperature:," + str(dev_temperature_celsius) + "," + str(dev_temperature_fahrenheit)
 # This above string is created and assigned to the variable toWrite.
@@ -84,7 +84,7 @@ def countdown(h, m, s):  #15 minutes
 try:
 	while True:
 		temp_display()
-		countdown(0, 15, 0)
+		countdown(0, 0, 15)
 
 except KeyboardInterrupt:
 	lcd.clear()
