@@ -54,19 +54,57 @@ def temp_display():
 			relay.off()
 			print("Power off ",dev_temperature_celsius)
    
-def main():
-    temp_display()
-    time.sleep(900) #15 minutes is 900 seconds
+# def main():
+#     temp_display()
+#     time.sleep(900) #15 minutes is 900 seconds
 
+# Create class that acts as a countdown
+def countdown(h, m, s):  #15 minutes
+	
+	# Calculate the total number of seconds
+	total_seconds = h * 3600 + m * 60 + s
+	
+	# While loop that checks if total_seconds reaches zero
+	# If not zero, decrement total time by one second
+	while total_seconds > 0:
+		
+		# Timer represents time left on countdown
+		timer = datetime.timedelta(seconds = total_seconds)
+		
+		# Prints the time left on the timer
+		print(timer, end="\r")
+		
+		# Delays the program one second
+		time.sleep(1)
+		
+		# reduces total time by one second
+		total_seconds -= 1
+		
+	print("The countdown is at zero seconds!")
 
-
-# Below is the main while loop that will run the program forever. It is within a try loop that is triggered when Ctl+c is pressed. It is clean code to capture a keyboard termination.
 try:
-
 	while True:
-		main()
-		#temp_display()
-		#time.sleep(900) # 15 minutes
+		temp_display()
+		countdown(0, 15, 0)
+
 except KeyboardInterrupt:
 	lcd.clear()
 	lcd.write_string("Cancelled by\n\rUser") # the "\n" moves to next line, the "\r" means to return it to beginning of current line.
+    
+# Inputs for hours, minutes, seconds on timer
+# h = input("Enter the time in hours: ")
+# m = input("Enter the time in minutes: ")
+# s = input("Enter the time in seconds: ")
+# countdown(int(h), int(m), int(s))
+
+
+# Below is the main while loop that will run the program forever. It is within a try loop that is triggered when Ctl+c is pressed. It is clean code to capture a keyboard termination.
+# try:
+
+# 	while True:
+# 		main()
+# 		#temp_display()
+# 		#time.sleep(900) # 15 minutes
+# except KeyboardInterrupt:
+# 	lcd.clear()
+# 	lcd.write_string("Cancelled by\n\rUser") # the "\n" moves to next line, the "\r" means to return it to beginning of current line.
