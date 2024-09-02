@@ -7,6 +7,8 @@
 from temp_read import *  # Import the functions to handle the temp reader temp_read.py
 import sys
 import gpiozero
+import signal
+import threading
 import os
 # The os library allows you to interact with the operating system, and in this code, it's used to 
 # execute system commands (os.system) to load the required kernel modules for 1one-wire
@@ -55,48 +57,48 @@ def temp_display():
 			relay.off()
 			print("Power off ",dev_temperature_celsius)
    
-# def main():
-#     temp_display()
-#     time.sleep(900) #15 minutes is 900 seconds
+#def run_script():
+#	if stopButton.is_pressed or restartProgram.is_pressed: # check if the user let go of the button
+#		time.sleep(1) # wait for the hold time we want.
+#		if stopButton.is_pressed: # check if the user let go of the button
+#			os.system("sudo shutdown now -h") # shut down the Pi -h is or -r will reset
+#		elif restartProgram.is_pressed:
+			#print("the restart program button is pressed")
+#			temp_display()
 
-# Create class that acts as a countdown
-def countdown(h, m, s):  #15 minutes
-	
-	# Calculate the total number of seconds
-	total_seconds = h * 3600 + m * 60 + s
-	
-	# While loop that checks if total_seconds reaches zero
-	# If not zero, decrement total time by one second
-	while total_seconds > 0:
-		
-		# Timer represents time left on countdown
-		timer = datetime.timedelta(seconds = total_seconds)
-		
-		# Prints the time left on the timer
-		print(timer, end="\r")
-		
-		# Delays the program one second
-		time.sleep(1)
+def shutdown_system():
+	os.system("sudo shutdown now -h") # shut down the Pi -h is or -r will reset
 
-		# reduces total time by one second
-		total_seconds -= 1
-		if stopButton.is_pressed or restartProgram.is_pressed: # check if the user let go of the button
-			time.sleep(1) # wait for the hold time we want.
-			if stopButton.is_pressed: # check if the user let go of the button
-				os.system("sudo shutdown now -h") # shut down the Pi -h is or -r will reset
-			elif restartProgram.is_pressed:
-				#print("the restart program button is pressed")
-				temp_display()
-	#print("The countdown is at zero seconds!")
+def restart_program():
+	temp_display()
 
-try:
-	while True:
-		temp_display()
-		countdown(0, 15, 0)
+
+def do_timed_stuff():
+	global t
+	print("timer fired")
+	temp_display()
+	t.cancel() # Just to be sure
+	t = threading.Timer(15, do_timed_stuff)
+	t.start() # after the timer restart to minimise drift
+
+stopButton.when_pressed = shutdown_system
+restartProgram.when_pressed = restart_program
+
+t = threading.Timer(15, do_timed_stuff)
+t.start()
+temp_display()
+
+signal.pause() # this pauses your main program so nothing will happen until one of the callbacks fires.
+
+
+# try:
+# 	while True:
+# 		temp_display()
+# 		#countdown(0, 15, 0)
   
-except KeyboardInterrupt:
-	lcd.clear()
-	lcd.write_string("Cancelled by\n\rUser") # the "\n" moves to next line, the "\r" means to return it to beginning of current line.
+# except KeyboardInterrupt:
+# 	lcd.clear()
+# 	lcd.write_string("Cancelled by\n\rUser") # the "\n" moves to next line, the "\r" means to return it to beginning of current line.
     
 # Inputs for hours, minutes, seconds on timer
 # h = input("Enter the time in hours: ")
