@@ -32,8 +32,13 @@ RELAY_PIN = 17 # The GPIO pin the 5v relay is connected to
 relay = gpiozero.OutputDevice(RELAY_PIN, active_high=False, initial_value=True)
 lcd = CharLCD(i2c_expander='PCF8574', address=0x27, port=1, cols=16, rows=2, dotsize=8) # Initialize the lcd. This code is for an LCD with an i2c piggyback.
 degree_sign = chr(223) # For the degree symbol, assign this character to the "degree_sign" variable for ease of use.
-MIN_TEMP = 24
-MAX_TEMP = 26
+
+MIN_TEMP = 25 # Kombucha Changed from 24 to 25.
+MAX_TEMP = 26 # Kombucha
+
+# MIN_TEMP = 23 # Water Kefir
+# MAX_TEMP = 24 # Water Kefir
+
 stopButton = gpiozero.Button(27) # defines the button as an object and chooses GPIO 27
 restartProgram = gpiozero.Button(22)
 
@@ -41,7 +46,7 @@ restartProgram = gpiozero.Button(22)
 def temp_display():
 	dev_temperature_celsius, dev_temperature_fahrenheit, = read_temp() # Calls on function "read_temp()", assigns the returned items to the corresponding variable name
 	dt = datetime.datetime.now() # Assigns current date and time to the variable "dt"
-	f = open("/home/brewmaster/projects/autoferment/logs/kombucha_log.txt", "a+") #a+ parameter tells open to append every time the program runs, otherwise create a new file.
+	f = open("/home/brewmaster/projects/autoferment/logs/Kombucha_log.txt", "a+") #a+ parameter tells open to append every time the program runs, otherwise create a new file.
 	toWrite = dt.strftime("%m/%d/%Y,%H:%M:%S") + ",Temperature:," + str(dev_temperature_celsius) + "," + str(dev_temperature_fahrenheit)
 	# This above string is created and assigned to the variable toWrite.
 	f.write(toWrite + "\n")
@@ -59,7 +64,8 @@ def temp_display():
 			print("Power off ",dev_temperature_celsius)
 
 def shutdown_system():
-	print("Shutting down System.")
+	lcd.clear()
+	lcd.write_string("Shutting down\n\rSystem")
 	os.system("sudo shutdown now -h") # shut down the Pi -h is or -r will reset
 
 def restart_program():
