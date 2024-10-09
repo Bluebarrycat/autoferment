@@ -103,7 +103,8 @@ try:
 	signal.pause() # this pauses your main program so nothing will happen until one of the callbacks fires.
 
 except Exception as e:
-	logging(e)
+	logging.error(e)
+	pring("Error Detected")
 	lcd.clear()
 	lcd.write_string("Error detected")  # the "\n" moves to next line, the "\r" means to return it to beginning of current line.
 
