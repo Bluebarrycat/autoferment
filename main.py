@@ -8,6 +8,7 @@ import sys
 import gpiozero
 import signal
 import threading
+import logging
 import os
 # The os library allows you to interact with the operating system, and in this code, it's used to
 # execute system commands (os.system) to load the required kernel modules for 1one-wire
@@ -41,6 +42,17 @@ MAX_TEMP = 26 # Kombucha
 
 stopButton = gpiozero.Button(27) # defines the button as an object and chooses GPIO 27
 restartProgram = gpiozero.Button(22)
+
+# Logging
+#Set up the basic configuration for logging
+logging.basicConfig(filename='log_running.txt', level=logging.DEBUG, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+
+# Log messages of various severity levels
+logging.debug('This is a debug message')
+logging.info('This is an info message')
+logging.warning('This is a warning message')
+logging.error('This is an error message')
+logging.critical('This is a critical message')
 
 # The below function is to display the temperatures.
 def temp_display():
