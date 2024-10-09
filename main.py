@@ -102,11 +102,13 @@ try:
 
 	signal.pause() # this pauses your main program so nothing will happen until one of the callbacks fires.
 
-except Exception as e:
-	logging.error(e)
-	pring("Error Detected")
-	lcd.clear()
-	lcd.write_string("Error detected")  # the "\n" moves to next line, the "\r" means to return it to beginning of current line.
+except Exception as Argument:
+	print("Error Detected")
+	f = open("/home/brewmaster/projects/autoferment/logs/error_log.txt", "a")
+	f.write(str(Argument))
+	f.close()
+	#lcd.clear()
+	#lcd.write_string("Error detected")  # the "\n" moves to next line, the "\r" means to return it to beginning of current line.
 
 except KeyboardInterrupt:
 	lcd.clear()
