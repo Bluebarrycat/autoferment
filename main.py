@@ -45,7 +45,7 @@ restartProgram = gpiozero.Button(22)
 
 # Logging
 #Set up the basic configuration for logging
-logging.basicConfig(filename='log_running.txt', level=logging.DEBUG, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+logging.basicConfig(filename='/home/brewmaster/projects/autoferment/logs/log_running.txt', level=logging.DEBUG, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 
 # Log messages of various severity levels
 logging.debug('This is a debug message')
@@ -101,6 +101,12 @@ try:
 	temp_display()
 
 	signal.pause() # this pauses your main program so nothing will happen until one of the callbacks fires.
+
+except Exception as e:
+	logging(e)
+	lcd.clear()
+	lcd.write_string("Error detected")  # the "\n" moves to next line, the "\r" means to return it to beginning of current line.
+
 except KeyboardInterrupt:
 	lcd.clear()
-	lcd.write_string("Cancelled by\n\rUser")  # the "\n" moves to next line, the "\r" means to return it to beginning of current line.
+	lcd.write_string("Cancelled by\n\rKeyboard")  # the "\n" moves to next line, the "\r" means to return it to beginning of current line.
