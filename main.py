@@ -45,14 +45,14 @@ restartProgram = gpiozero.Button(22)
 
 # Logging
 #Set up the basic configuration for logging
-logging.basicConfig(filename='/home/brewmaster/projects/autoferment/logs/log_running.txt', level=logging.DEBUG, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+logging.basicConfig(filename='/home/brewmaster/projects/autoferment/logs/log_report.txt', level=logging.DEBUG, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 
 # Log messages of various severity levels
-logging.debug('This is a debug message')
-logging.info('This is an info message')
-logging.warning('This is a warning message')
-logging.error('This is an error message')
-logging.critical('This is a critical message')
+#logging.debug('This is a debug message')
+logging.info('Program has started running')
+#logging.warning('This is a warning message')
+#logging.error('This is an error message')
+#logging.critical('This is a critical message')
 
 # The below function is to display the temperatures.
 def temp_display():
@@ -123,6 +123,6 @@ except KeyboardInterrupt:
 	lcd.clear()
 	lcd.write_string("Cancelled by\n\rKeyboard")  # the "\n" moves to next line, the "\r" means to return it to beginning of current line.
  
-finally:
-	logging.error("Restarting System due to error.")
-	os.system("sudo shutdown now -r") # shut down the Pi -h is or -r will reset
+#finally:
+#	logging.error("Restarting System due to error.")
+#	os.system("sudo shutdown now -r") # shut down the Pi -h is or -r will reset
