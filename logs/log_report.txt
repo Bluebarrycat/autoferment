@@ -1,0 +1,26 @@
+2024-10-10 10:30:53,896 - root - INFO - Program has started running
+2024-10-10 10:30:53,897 - root - INFO - Taking Temperature
+2024-10-10 10:30:54,704 - root - INFO - Writing Temp to file
+2024-10-10 10:30:54,710 - root - INFO - Clearing LCD for temp
+2024-10-10 10:30:54,714 - root - INFO - Writing temp to LCD
+2024-10-10 10:30:54,747 - root - INFO - Turn relay ON
+2024-10-10 10:32:44,183 - root - INFO - Program restart by button
+2024-10-10 10:32:44,183 - root - INFO - Taking Temperature
+2024-10-10 10:32:44,998 - root - INFO - Writing Temp to file
+2024-10-10 10:32:44,999 - root - INFO - Clearing LCD for temp
+2024-10-10 10:32:45,006 - root - INFO - Writing temp to LCD
+2024-10-10 10:32:45,062 - root - INFO - Turn relay ON
+2024-10-10 10:32:50,776 - root - INFO - System Shutdown by button
+2024-10-10 10:32:50,783 - root - INFO - LCD cleared
+2024-10-10 10:32:50,881 - root - INFO - Write message to LCD
+2024-10-10 10:32:50,881 - root - INFO - System shutting down
+2024-10-10 10:32:59,193 - root - INFO - Program has started running
+2024-10-10 10:32:59,214 - root - INFO - Taking Temperature
+2024-10-10 10:33:00,035 - root - INFO - Writing Temp to file
+2024-10-10 10:33:00,048 - root - INFO - Clearing LCD for temp
+2024-10-10 10:33:00,054 - root - INFO - Writing temp to LCD
+2024-10-10 10:33:06,106 - root - INFO - Program restart by button
+2024-10-10 10:33:06,106 - root - INFO - Taking Temperature
+2024-10-10 10:33:06,923 - root - INFO - Writing Temp to file
+2024-10-10 10:33:06,923 - root - INFO - Clearing LCD for temp
+2024-10-10 10:33:06,928 - root - INFO - Writing temp to LCD
