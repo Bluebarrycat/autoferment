@@ -56,40 +56,53 @@ logging.critical('This is a critical message')
 
 # The below function is to display the temperatures.
 def temp_display():
+	logging.info("Taking Temperature")
 	dev_temperature_celsius, dev_temperature_fahrenheit, = read_temp() # Calls on function "read_temp()", assigns the returned items to the corresponding variable name
 	dt = datetime.datetime.now() # Assigns current date and time to the variable "dt"
+	logging.info("Writing Temp to file")
 	f = open("/home/brewmaster/projects/autoferment/logs/Kombucha_log.txt", "a+") #a+ parameter tells open to append every time the program runs, otherwise create a new file.
 	toWrite = dt.strftime("%m/%d/%Y,%H:%M:%S") + ",Temperature:," + str(dev_temperature_celsius) + "," + str(dev_temperature_fahrenheit)
 	# This above string is created and assigned to the variable toWrite.
 	f.write(toWrite + "\n")
 	f.close()
+	logging.info("Clearing LCD for temp")
 	lcd.clear() # clears the lcd
+	logging.info("Writing temp to LCD")
 	lcd.write_string(f'Temp: {dev_temperature_celsius:.2f}{degree_sign}C')
 
 	if dev_temperature_celsius <= MIN_TEMP:
 		# I want to turn on the heat now.
+		logging.info("Turn relay ON")
 		relay.on()
-		print("Power on ",dev_temperature_celsius)
+	#	print("Power on ",dev_temperature_celsius) # only needed for testing in console
 	else:
 		if dev_temperature_celsius >= MAX_TEMP:
 			relay.off()
+			logging.info("Turn relay OFF")
 			print("Power off ",dev_temperature_celsius)
 
 def shutdown_system():
+	logging.info("System Shutdown by button")
 	lcd.clear()
+	logging.info("LCD cleared")
 	lcd.write_string("Shutting down\n\rSystem")
+	logging.info("Write message to LCD")
+	logging.info("System shutting down")
 	os.system("sudo shutdown now -h") # shut down the Pi -h is or -r will reset
 
 def restart_program():
+	logging.info("Program restart by button")
 	temp_display()
 
 
 def do_timed_stuff():
 	global t
-	print("timer fired")
+	print("timer fired") # Only shows in console
+	logging.info("Run temp_display function")
 	temp_display()
 	t.cancel() # Just to be sure
 	t = threading.Timer(900, do_timed_stuff) # 900 seconds = 15 minutes
+	logging.info("15 minute countdown started")
 	t.start() # after the timer restart to minimise drift
 
 try:
@@ -102,14 +115,14 @@ try:
 
 	signal.pause() # this pauses your main program so nothing will happen until one of the callbacks fires.
 
-except Exception as Argument:
-	print("Error Detected")
-	f = open("/home/brewmaster/projects/autoferment/logs/error_log.txt", "a")
-	f.write(str(Argument))
-	f.close()
-	#lcd.clear()
-	#lcd.write_string("Error detected")  # the "\n" moves to next line, the "\r" means to return it to beginning of current line.
+except Exception as argument:
+	logging.exception("Exception details:")
 
 except KeyboardInterrupt:
+	logging.info("Keyboard interrupt cancelled program")
 	lcd.clear()
 	lcd.write_string("Cancelled by\n\rKeyboard")  # the "\n" moves to next line, the "\r" means to return it to beginning of current line.
+ 
+finally:
+	logging.error("Restarting System due to error.")
+	os.system("sudo shutdown now -r") # shut down the Pi -h is or -r will reset
